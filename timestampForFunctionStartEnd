@@ -1,0 +1,28 @@
+function fullFunction() {
+  
+  //Get Start time
+  var today = new Date();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var StartdateTime = date+' '+time;
+  //Log Start time
+  var autoLogger = SpreadsheetApp.openByUrl('Insert URL');
+  var run = autoLogger.getSheetByName('Insert sheet name');
+    
+  yourFunction();
+  maybeAnotherFunctionAfter();
+  
+  //Log end time
+  var today = new Date();
+  var date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var EnddateTime = date+' '+time;
+  //Log the file name
+  var spreadsheetname = SpreadsheetApp.getActiveSpreadsheet().getName();
+  //Log # of processed units
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var Avals = ss.getRange("A1:A").getValues(); 
+  var Alast = Avals.filter(String).length - 1;
+  Logger.log(Alast);
+  run.appendRow([StartdateTime,EnddateTime,spreadsheetname,"Insert a Name",Alast]);
+}
