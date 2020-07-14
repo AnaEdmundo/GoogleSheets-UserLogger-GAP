@@ -1,0 +1,12 @@
+function removeDups(array) {
+ var outArray = [];
+ array.sort();
+ outArray.push(array[0][0]);
+ for(var n=1 in array){
+   if(outArray[outArray.length-1][0]!=array[n][0]){
+     outArray.push(array[n]);
+   n++
+   }
+ }
+ return outArray;
+}
