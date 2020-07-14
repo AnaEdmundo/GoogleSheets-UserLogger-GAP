@@ -1,0 +1,26 @@
+// Identify who has altered the file the latest
+function onEdit(e) {
+
+  var range = e.range;
+  var loggerTab = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Logger");
+  var activeUser = Session.getActiveUser().getEmail();
+  var formattedDate = Utilities.formatDate(new Date(), "GMT", "dd-MM-yyyy");
+  // here select the postion of the cell you would like the information to be on
+  loggerTab.getRange(1, 2).setValue(activeUser);
+  loggerTab.getRange(1, 3).setValue(formattedDate);
+
+}
+
+// Send email to the last person with errors 
+function sendEmailErrors() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet()
+  var loggerTab = ss.getSheetByName("Logger");
+  var countCellValue = loggerTab.getRange(2, 2).getValue();
+  var activeUserValue = loggerTab.getRange(1, 2).getValue();
+  var fileName = ss.getName();
+  var url = "https://docs.google.com/spreadsheets/d/"+ss.getId();
+
+  if (countCellValue > 0) {
+    MailApp.sendEmail(activeUserValue, "Here is the subject email", "There are " + countCellValue + " identified error cells in " + fileName + ". Please investigate and correct the values accordingly. See link here: "+ url);
+  }
+}
