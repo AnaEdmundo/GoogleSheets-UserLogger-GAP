@@ -1,0 +1,18 @@
+//Introduce the code in Google App Scripts and then set a trigger to the On Edit() function
+
+function onEdit(e) {
+  // Runs everytime a change is applied on document
+  var range = e.range;
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ftdsheet = ss.getSheetByName("SheetName");
+  // The numbers will depend on the location of the columns and rows you would like to apply the code to 8,5 and 7 are used as examples
+  if (ss.getSheetName() == "SheetName" && range.getColumn() < 8 && range.getColumn() > 5 && range.getRow() > 7 ) {
+  for (var i = 0; i < range.getHeight(); i++) {
+  //Capture the email address of the last user who is updating the data and writes to the modified lines
+    var time = new Date();
+    time = Utilities.formatDate(time, "GMT-00:00", "dd/MM/yy '-' HH:mm - ");
+  ftdsheet.getRange(range.getRow()+i, 1).setValue(time + Session.getActiveUser().getEmail());  
+  //Flag the line as changed
+  }
+  }
+}
